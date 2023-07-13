@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.*;
 import java.util.Random;
 
 public class Gameplane extends JPanel implements ActionListener {
@@ -16,10 +17,13 @@ public class Gameplane extends JPanel implements ActionListener {
     static final int DELAY = 100;
     final int x[] = new int[GAME_UNITS];
     final int y[] = new int[GAME_UNITS];
+    int xy[][] = new int[1000][1000];
     int bodyparts = 6;
     int adbody=0;
+    int masahat;
     char direction = 'R';
     boolean running = false;
+    int is_home;
     Timer timer;
     Random random;
     Gameplane(){
@@ -29,6 +33,7 @@ public class Gameplane extends JPanel implements ActionListener {
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
         Startgame();
+
     }
     public void Startgame(){
         running = true;
@@ -38,6 +43,7 @@ public class Gameplane extends JPanel implements ActionListener {
     public void paintComponent(Graphics s){
         super.paintComponent(s);
         Draw(s);
+
     }
     public void Draw(Graphics s){
         if (running) {
@@ -45,12 +51,39 @@ public class Gameplane extends JPanel implements ActionListener {
                 s.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
                 s.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
             }
+            s.setColor(new Color(45,180,0));
+            s.fillRect(0*UNIT_SIZE, 1*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+            s.fillRect(1*UNIT_SIZE, 1*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+            s.fillRect(0*UNIT_SIZE, 2*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+            s.fillRect(1*UNIT_SIZE, 2*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+            File myObj = new File("src/is_home.csv");
+            if (!myObj.exists()) {
+                try {
+                    myObj.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try (FileWriter fw = new FileWriter(myObj,false)){
+                PrintWriter pw = new PrintWriter(fw);
+                pw.print(0 + ",");
+                pw.println(1);
+                pw.print(0 + ",");
+                pw.println(2);
+                pw.print(1 + ",");
+                pw.println(1);
+                pw.print(1 + ",");
+                pw.print(2);
+                pw.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             for (int i = 0; i < bodyparts; i++) {
                 if (i == 0) {
                     s.setColor(Color.green);
                     s.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 } else {
-                    s.setColor(new Color(45, 180, 0));
+                    s.setColor(new Color(45, 205, 0));
                     s.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 }
             }
@@ -86,12 +119,39 @@ public class Gameplane extends JPanel implements ActionListener {
     public void addbody(){
         bodyparts++;
         adbody++;
+
     }
+
     public void Checkcollisions(){
-        for (int i=bodyparts;i>0;i--){
+        /*for (int i=bodyparts;i>0;i--){
             if ((x[0] == x[i])&&(y[0] == y[i])){
-                running = false;
+                masahat = i;
+                //running = false;
             }
+        }*/
+        int X[] = new int[1000];
+        int Y[] = new int[1000];
+        int i = 0;
+        int j = 0;
+        try{
+            BufferedReader bf = new BufferedReader(new FileReader("src/is_home.csv"));
+            String line;
+            while ((line = bf.readLine()) != null){
+                String[] values = line.split(",");
+                rect Rect = (new rect(Integer.parseInt(values[0]), Integer.parseInt(values[1])));
+                X[i] = Rect.getX();
+                Y[i] = Rect.getY();
+                i++;
+                j++;
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        for (i=0; i<X.length; i++){
+                if ((x[0] == X[i]*UNIT_SIZE) && (y[0] == Y[i]*UNIT_SIZE)) {
+                    masahat = i;
+                    running = false;
+                }
         }
         if (x[0]<0 || x[0]>SCREEN_WIDTH)
             running = false;
@@ -106,6 +166,11 @@ public class Gameplane extends JPanel implements ActionListener {
         s.setFont(new Font("Ink Free",Font.BOLD,40));
         FontMetrics metrics1 = getFontMetrics(s.getFont());
         s.drawString("Score: "+adbody, (SCREEN_WIDTH - metrics1.stringWidth("Score: "+adbody))/2, s.getFont().getSize());
+
+        s.setColor(Color.red);
+        s.setFont(new Font("Ink Free",Font.BOLD,40));
+        FontMetrics metrics3 = getFontMetrics(s.getFont());
+        s.drawString("s : "+masahat, (SCREEN_WIDTH - metrics3.stringWidth("s : "+masahat))/2, SCREEN_HEIGHT/4);
 
         s.setColor(Color.red);
         s.setFont(new Font("Ink Free",Font.BOLD,75));
