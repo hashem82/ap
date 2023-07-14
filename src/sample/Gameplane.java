@@ -23,9 +23,14 @@ public class Gameplane extends JPanel implements ActionListener {
     int masahat;
     char direction = 'R';
     boolean running = false;
+    boolean home = false;
     int is_home;
     Timer timer;
     Random random;
+    int minx = 0;
+    int maxx = 0;
+    int miny = 0;
+    int maxy = 0;
     Gameplane(){
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
@@ -43,7 +48,6 @@ public class Gameplane extends JPanel implements ActionListener {
     public void paintComponent(Graphics s){
         super.paintComponent(s);
         Draw(s);
-
     }
     public void Draw(Graphics s){
         if (running) {
@@ -95,6 +99,7 @@ public class Gameplane extends JPanel implements ActionListener {
         else {
             Gameover(s);
         }
+
     }
     public void Move(){
         for (int i=bodyparts; i>0; i--){
@@ -123,12 +128,28 @@ public class Gameplane extends JPanel implements ActionListener {
     }
 
     public void Checkcollisions(){
-        /*for (int i=bodyparts;i>0;i--){
+        for (int i=bodyparts;i>0;i--){
+            File myObj = new File("src/bodyway.csv");
+            if (!myObj.exists()) {
+                try {
+                    myObj.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try (FileWriter fw = new FileWriter(myObj,true)){
+                PrintWriter pw = new PrintWriter(fw);
+                pw.print(x[i]/(SCREEN_WIDTH*SCREEN_HEIGHT) + ",");
+                pw.println(y[i]/(SCREEN_WIDTH*SCREEN_HEIGHT));
+                pw.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             if ((x[0] == x[i])&&(y[0] == y[i])){
                 masahat = i;
                 //running = false;
             }
-        }*/
+        }
         int X[] = new int[1000];
         int Y[] = new int[1000];
         int i = 0;
@@ -151,6 +172,7 @@ public class Gameplane extends JPanel implements ActionListener {
                 if ((x[0] == X[i]*UNIT_SIZE) && (y[0] == Y[i]*UNIT_SIZE)) {
                     masahat = i;
                     running = false;
+                    home = true;
                 }
         }
         if (x[0]<0 || x[0]>SCREEN_WIDTH)
@@ -162,10 +184,70 @@ public class Gameplane extends JPanel implements ActionListener {
         }
     }
     public void Gameover(Graphics s){
+        //for (int k=bodyparts;k>0;k--) {
+            //for (int a = 0; a < k; a++) {
+                //if (x[a] * UNIT_SIZE < x[k] * UNIT_SIZE) {
+                    //s.setColor(new Color(45,180,0));
+                    //s.fillRect(bodyparts*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+                    //running = false;
+                //}
+            //}
+        //}
         s.setColor(Color.red);
         s.setFont(new Font("Ink Free",Font.BOLD,40));
         FontMetrics metrics1 = getFontMetrics(s.getFont());
         s.drawString("Score: "+adbody, (SCREEN_WIDTH - metrics1.stringWidth("Score: "+adbody))/2, s.getFont().getSize());
+        for (int i=0;i<=adbody;i++) {
+            int a[] = new int[1000];
+            if (x[i] < minx)
+                minx = x[i];
+            if(x[i] > maxx)
+                maxx = x[i];
+            if (y[i] < miny)
+                miny = x[i];
+            if(y[i] > maxy)
+                maxy = x[i];
+
+            s.setColor(new Color(45,180,0));
+            s.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+
+            File myObj = new File("src/bodyway.csv");
+            if (!myObj.exists()) {
+                try {
+                    myObj.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try (FileWriter fw = new FileWriter(myObj, true)) {
+                PrintWriter pw = new PrintWriter(fw);
+                pw.print(x[i]/UNIT_SIZE + ",");
+                pw.println(y[i]/UNIT_SIZE);
+                pw.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        System.out.println(maxx);
+        System.out.println(minx);
+        System.out.println(maxy);
+        System.out.println(miny);
+        for (int a = 0; a<=adbody; a++){
+           if (x[a] <= maxx && y[a] <= maxy){
+                s.setColor(new Color(45, 180, 0));
+                s.fillRect(minx, maxy, UNIT_SIZE, UNIT_SIZE);
+            }
+        }
+        for (int a = 0; a<1000; a++) {
+            if (y[a]<maxy && y[a] > miny ){
+                for (int b=0; b<=maxx/UNIT_SIZE; b++) {
+                    if (x[b] <= maxx && x[b] >= minx ) {
+                        s.setColor(new Color(45, 180,0));
+                        s.fillRect(b*UNIT_SIZE, y[a], UNIT_SIZE, UNIT_SIZE);
+                    }
+                }
+            }
+        }
 
         s.setColor(Color.red);
         s.setFont(new Font("Ink Free",Font.BOLD,40));

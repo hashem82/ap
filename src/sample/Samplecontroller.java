@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 public class Samplecontroller {
     public void newwindow(ActionEvent e){
         new Gameframe();
-
+        File myObj = new File("src/bodyway.csv");
+        myObj.delete();
     }
 }
