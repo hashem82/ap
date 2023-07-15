@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Gameplane extends JPanel implements ActionListener {
@@ -18,12 +19,15 @@ public class Gameplane extends JPanel implements ActionListener {
     final int x[] = new int[GAME_UNITS];
     final int y[] = new int[GAME_UNITS];
     int xy[][] = new int[1000][1000];
+    ArrayList homesx = new ArrayList(1000);
+    ArrayList homesy = new ArrayList(1000);
     int bodyparts = 6;
     int adbody=0;
     int masahat;
     char direction = 'R';
     boolean running = false;
     boolean home = false;
+    boolean homes = false;
     int is_home;
     Timer timer;
     Random random;
@@ -51,6 +55,17 @@ public class Gameplane extends JPanel implements ActionListener {
     }
     public void Draw(Graphics s){
         if (running) {
+            if (home){
+                Makehome(s);
+                home = false;
+                homes = true;
+            }
+            if (homes){
+                for (int j=0; j<homesx.size(); j++){
+                    s.setColor(new Color(45,180,0));
+                    s.fillRect((Integer) homesx.get(j), (Integer) homesy.get(j), UNIT_SIZE, UNIT_SIZE);
+                }
+            }
             for (int i = 0; i < SCREEN_WIDTH / UNIT_SIZE; i++) {
                 s.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
                 s.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
@@ -171,7 +186,7 @@ public class Gameplane extends JPanel implements ActionListener {
         for (i=0; i<X.length; i++){
                 if ((x[0] == X[i]*UNIT_SIZE) && (y[0] == Y[i]*UNIT_SIZE)) {
                     masahat = i;
-                    running = false;
+                    //running = false;
                     home = true;
                 }
         }
@@ -183,20 +198,7 @@ public class Gameplane extends JPanel implements ActionListener {
             timer.stop();
         }
     }
-    public void Gameover(Graphics s){
-        //for (int k=bodyparts;k>0;k--) {
-            //for (int a = 0; a < k; a++) {
-                //if (x[a] * UNIT_SIZE < x[k] * UNIT_SIZE) {
-                    //s.setColor(new Color(45,180,0));
-                    //s.fillRect(bodyparts*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
-                    //running = false;
-                //}
-            //}
-        //}
-        s.setColor(Color.red);
-        s.setFont(new Font("Ink Free",Font.BOLD,40));
-        FontMetrics metrics1 = getFontMetrics(s.getFont());
-        s.drawString("Score: "+adbody, (SCREEN_WIDTH - metrics1.stringWidth("Score: "+adbody))/2, s.getFont().getSize());
+    public void Makehome(Graphics s){
         for (int i=0;i<=adbody;i++) {
             int a[] = new int[1000];
             if (x[i] < minx)
@@ -210,6 +212,8 @@ public class Gameplane extends JPanel implements ActionListener {
 
             s.setColor(new Color(45,180,0));
             s.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+            homesx.add(x[i]);
+            homesy.add(y[i]);
 
             File myObj = new File("src/bodyway.csv");
             if (!myObj.exists()) {
@@ -233,9 +237,11 @@ public class Gameplane extends JPanel implements ActionListener {
         System.out.println(maxy);
         System.out.println(miny);
         for (int a = 0; a<=adbody; a++){
-           if (x[a] <= maxx && y[a] <= maxy){
+            if (x[a] <= maxx && y[a] <= maxy){
                 s.setColor(new Color(45, 180, 0));
                 s.fillRect(minx, maxy, UNIT_SIZE, UNIT_SIZE);
+                homesx.add(minx);
+                homesy.add(maxy);
             }
         }
         for (int a = 0; a<1000; a++) {
@@ -244,10 +250,27 @@ public class Gameplane extends JPanel implements ActionListener {
                     if (x[b] <= maxx && x[b] >= minx ) {
                         s.setColor(new Color(45, 180,0));
                         s.fillRect(b*UNIT_SIZE, y[a], UNIT_SIZE, UNIT_SIZE);
+                        homesx.add(b*UNIT_SIZE);
+                        homesy.add(y[a]);
                     }
                 }
             }
         }
+    }
+    public void Gameover(Graphics s){
+        //for (int k=bodyparts;k>0;k--) {
+            //for (int a = 0; a < k; a++) {
+                //if (x[a] * UNIT_SIZE < x[k] * UNIT_SIZE) {
+                    //s.setColor(new Color(45,180,0));
+                    //s.fillRect(bodyparts*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+                    //running = false;
+                //}
+            //}
+        //}
+        s.setColor(Color.red);
+        s.setFont(new Font("Ink Free",Font.BOLD,40));
+        FontMetrics metrics1 = getFontMetrics(s.getFont());
+        s.drawString("Score: "+adbody, (SCREEN_WIDTH - metrics1.stringWidth("Score: "+adbody))/2, s.getFont().getSize());
 
         s.setColor(Color.red);
         s.setFont(new Font("Ink Free",Font.BOLD,40));
