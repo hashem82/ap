@@ -15,12 +15,14 @@ public class Gameplane extends JPanel implements ActionListener {
     static final int SCREEN_HEIGHT = 700;
     static final int UNIT_SIZE = 25;
     static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/UNIT_SIZE;
-    static final int DELAY = 100;
+    static final int DELAY = 200;
     final int x[] = new int[GAME_UNITS];
     final int y[] = new int[GAME_UNITS];
     int xy[][] = new int[1000][1000];
     ArrayList homesx = new ArrayList(1000);
     ArrayList homesy = new ArrayList(1000);
+    ArrayList ishomesx = new ArrayList(1000);
+    ArrayList ishomesy = new ArrayList(1000);
     int bodyparts = 6;
     int adbody=0;
     int masahat;
@@ -55,6 +57,8 @@ public class Gameplane extends JPanel implements ActionListener {
     }
     public void Draw(Graphics s){
         if (running) {
+            ishomesx.clear();
+            ishomesy.clear();
             if (home){
                 Makehome(s);
                 home = false;
@@ -64,6 +68,8 @@ public class Gameplane extends JPanel implements ActionListener {
                 for (int j=0; j<homesx.size(); j++){
                     s.setColor(new Color(45,180,0));
                     s.fillRect((Integer) homesx.get(j), (Integer) homesy.get(j), UNIT_SIZE, UNIT_SIZE);
+                    ishomesx.add(homesx.get(j));
+                    ishomesy.add(homesy.get(j));
                 }
             }
             for (int i = 0; i < SCREEN_WIDTH / UNIT_SIZE; i++) {
@@ -75,28 +81,15 @@ public class Gameplane extends JPanel implements ActionListener {
             s.fillRect(1*UNIT_SIZE, 1*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
             s.fillRect(0*UNIT_SIZE, 2*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
             s.fillRect(1*UNIT_SIZE, 2*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
-            File myObj = new File("src/is_home.csv");
-            if (!myObj.exists()) {
-                try {
-                    myObj.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            try (FileWriter fw = new FileWriter(myObj,false)){
-                PrintWriter pw = new PrintWriter(fw);
-                pw.print(0 + ",");
-                pw.println(1);
-                pw.print(0 + ",");
-                pw.println(2);
-                pw.print(1 + ",");
-                pw.println(1);
-                pw.print(1 + ",");
-                pw.print(2);
-                pw.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            ishomesx.add(0*UNIT_SIZE);
+            ishomesy.add(1*UNIT_SIZE);
+            ishomesx.add(1*UNIT_SIZE);
+            ishomesy.add(1*UNIT_SIZE);
+            ishomesx.add(0*UNIT_SIZE);
+            ishomesy.add(2*UNIT_SIZE);
+            ishomesx.add(1*UNIT_SIZE);
+            ishomesy.add(2*UNIT_SIZE);
+
             for (int i = 0; i < bodyparts; i++) {
                 if (i == 0) {
                     s.setColor(Color.green);
@@ -143,52 +136,12 @@ public class Gameplane extends JPanel implements ActionListener {
     }
 
     public void Checkcollisions(){
-        for (int i=bodyparts;i>0;i--){
-            File myObj = new File("src/bodyway.csv");
-            if (!myObj.exists()) {
-                try {
-                    myObj.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            try (FileWriter fw = new FileWriter(myObj,true)){
-                PrintWriter pw = new PrintWriter(fw);
-                pw.print(x[i]/(SCREEN_WIDTH*SCREEN_HEIGHT) + ",");
-                pw.println(y[i]/(SCREEN_WIDTH*SCREEN_HEIGHT));
-                pw.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            if ((x[0] == x[i])&&(y[0] == y[i])){
-                masahat = i;
+        for (int a=0; a<ishomesx.size(); a++){
+            if ((x[0] == (Integer) ishomesx.get(a)) && (y[0] == (Integer) ishomesy.get(a))){
+                masahat = a;
                 //running = false;
+                home = true;
             }
-        }
-        int X[] = new int[1000];
-        int Y[] = new int[1000];
-        int i = 0;
-        int j = 0;
-        try{
-            BufferedReader bf = new BufferedReader(new FileReader("src/is_home.csv"));
-            String line;
-            while ((line = bf.readLine()) != null){
-                String[] values = line.split(",");
-                rect Rect = (new rect(Integer.parseInt(values[0]), Integer.parseInt(values[1])));
-                X[i] = Rect.getX();
-                Y[i] = Rect.getY();
-                i++;
-                j++;
-            }
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        for (i=0; i<X.length; i++){
-                if ((x[0] == X[i]*UNIT_SIZE) && (y[0] == Y[i]*UNIT_SIZE)) {
-                    masahat = i;
-                    //running = false;
-                    home = true;
-                }
         }
         if (x[0]<0 || x[0]>SCREEN_WIDTH)
             running = false;
@@ -214,23 +167,6 @@ public class Gameplane extends JPanel implements ActionListener {
             s.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
             homesx.add(x[i]);
             homesy.add(y[i]);
-
-            File myObj = new File("src/bodyway.csv");
-            if (!myObj.exists()) {
-                try {
-                    myObj.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            try (FileWriter fw = new FileWriter(myObj, true)) {
-                PrintWriter pw = new PrintWriter(fw);
-                pw.print(x[i]/UNIT_SIZE + ",");
-                pw.println(y[i]/UNIT_SIZE);
-                pw.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
         System.out.println(maxx);
         System.out.println(minx);
