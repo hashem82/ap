@@ -14,27 +14,26 @@ public abstract class Gamer implements Comparable<Gamer>{
     int Height;
     int Width;
     String name;
-    Boolean isAlive = true;
+    Boolean Alive = true;
     Rect currentRect;
 
     Gamer(int height, int width, Color color){
         x =(int)(Math.random() * (width - 2) +1);
         y =(int)(Math.random() * (height - 2) +1);
 
-        if(x < 5){
-            x += 5;
-        }else if(x > (width -5)){
-            x-= 5;
+        if(x < 800){
+            x += 800;
+        }else if(x > (width -800)){
+            x -= 800;
         }
-        if(y < 5){
-            y+= 5;
-        }else if(y > (height) - 5){
-            y -= 5;
+        if(y < 800){
+            y += 800;
+        }else if(y > (height) - 800){
+            y -= 800;
         }
         this.color = color;
         this.Height = height;
         this.Width = width;
-
         double rand = Math.random();
         if (rand < 0.25) {
             dx = 1;
@@ -51,43 +50,31 @@ public abstract class Gamer implements Comparable<Gamer>{
         }
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
     abstract void move();
 
     public void killed(){
-        isAlive = false;
-        ArrayList<Rect> ownedTilesCopy = (ArrayList<Rect>)rectsOwned.clone();
-        ArrayList<Rect> contestedTilesCopy = (ArrayList<Rect>)rectsContested.clone();
-        for(int i = 0; i < ownedTilesCopy.size(); i++){
-            ownedTilesCopy.get(i).setOwner(null);
+        Alive = false;
+        ArrayList<Rect> ownedRectsCopy = (ArrayList<Rect>)rectsOwned.clone();
+        ArrayList<Rect> contestedRectsCopy = (ArrayList<Rect>)rectsContested.clone();
+        for(int i = 0; i < ownedRectsCopy.size(); i++){
+            ownedRectsCopy.get(i).setOwner(null);
         }
 
-        for(int i = 0; i < contestedTilesCopy.size(); i++){
-            contestedTilesCopy.get(i).setContestedOwner(null);
+        for(int i = 0; i < contestedRectsCopy.size(); i++){
+            contestedRectsCopy.get(i).setContestedOwner(null);
         }
         rectsOwned.clear();
         rectsContested.clear();
         currentRect = null;
     }
 
-    public void setTileOwned(Rect rect){
+    public void setRectOwned(Rect rect){
         rectsOwned.add(rect);
         rect.setOwner(this);
         rect.setContestedOwner(null);
     }
 
-    public void removeTileOwned(Rect rect){
+    public void removeRectOwned(Rect rect){
         rectsOwned.remove(rect);
     }
 
@@ -110,7 +97,7 @@ public abstract class Gamer implements Comparable<Gamer>{
 
     public void contestToOwned(){
         for (Rect t : rectsContested) {
-            setTileOwned(t);
+            setRectOwned(t);
         }
         rectsContested.clear();
     }
@@ -123,6 +110,18 @@ public abstract class Gamer implements Comparable<Gamer>{
 
     public void setCurrentRect(Rect currentRect) {
         this.currentRect = currentRect;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public int getDx() {
@@ -138,11 +137,11 @@ public abstract class Gamer implements Comparable<Gamer>{
     }
 
     public Boolean getAlive() {
-        return isAlive;
+        return Alive;
     }
 
     public void setAlive(Boolean alive) {
-        isAlive = alive;
+        Alive = alive;
     }
 
     @Override
