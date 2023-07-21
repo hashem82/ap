@@ -5,16 +5,13 @@ import java.awt.event.KeyEvent;
 
 public class Me extends Gamer{
     int happenedKey;
-
     Me(int height, int width, Color color, String name) {
         super(height, width, color);
         this.name = name;
     }
-
     public void setHappenedKey(int happenedKey) {
         this.happenedKey = happenedKey;
     }
-
     @Override
     void move() {
         x += dx;

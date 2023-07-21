@@ -4,15 +4,16 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Gamer implements Comparable<Gamer>{
+
+    ArrayList<Rect> rectsOwned = new ArrayList<>();
+    ArrayList<Rect> rectsContested = new ArrayList<>();
+    int Height;
+    int Width;
     int x;
     int y;
     int dx;
     int dy;
     Color color;
-    ArrayList<Rect> rectsOwned = new ArrayList<>();
-    ArrayList<Rect> rectsContested = new ArrayList<>();
-    int Height;
-    int Width;
     String name;
     Boolean Alive = true;
     Rect currentRect;
@@ -20,15 +21,14 @@ public abstract class Gamer implements Comparable<Gamer>{
     Gamer(int height, int width, Color color){
         x =(int)(Math.random() * (width - 2) +1);
         y =(int)(Math.random() * (height - 2) +1);
-
-        if(x < 800){
+        if (x < 800) {
             x += 800;
-        }else if(x > (width -800)){
+        } else if (x > (width - 800)) {
             x -= 800;
         }
-        if(y < 800){
+        if (y < 800) {
             y += 800;
-        }else if(y > (height) - 800){
+        } else if (y > (height) - 800) {
             y -= 800;
         }
         this.color = color;

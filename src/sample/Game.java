@@ -103,12 +103,12 @@ public class Game extends JFrame implements ActionListener {
 
         switch (e.getActionCommand()) {
             case "Play Singleplayer":
-                page = new Page(this, name1, 2200, 2200, speed, bot);
+                page = new Page(this, name1, speed, bot);
                 cards.add(page, "board");
                 setState(STATE.GAME);
                 break;
             case "Play Multiplayer":
-                page = new Page(this, name1, name2, 2200, 2200, speed, bot);
+                page = new Page(this, name1, name2, speed, bot);
                 cards.add(page, "board");
                 setState(STATE.GAME);
                 break;

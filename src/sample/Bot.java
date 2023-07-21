@@ -81,7 +81,6 @@ public class Bot extends Gamer{
             dy = 0;
         }
     }
-
     @Override
     public void killed() {
         super.killed();
