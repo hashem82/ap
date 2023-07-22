@@ -40,8 +40,8 @@ public class Gameframe extends JPanel {
         add(new JLabel(" "));
         add(new JLabel(" "));
 
-        JButton playBtn = new JButton("Play Singleplayer");
-        JButton playMultiBtn = new JButton("Play Multiplayer");
+        JButton playBtn = new JButton("Play VS PC");
+        JButton playMultiBtn = new JButton("Multiplayer(Offline)");
         JButton[] buttons = {playBtn, playMultiBtn};
 
         for(JButton button : buttons){

@@ -18,7 +18,7 @@ public class Page extends JPanel {
     Rect[][] gameArea;
     int botNumber;
     int timernumber = 0;
-    final int timerspeed;
+    int timerspeed;
     ArrayList<Gamer> gamers = new ArrayList<>();
     ArrayList<Me> mes = new ArrayList<>();
     ArrayList<Draw> draws = new ArrayList<>();
@@ -29,6 +29,7 @@ public class Page extends JPanel {
     boolean paused = true;
     boolean Gameover = false;
     ArrayList<Color> colorList = new ArrayList<>(Arrays.asList(Color.magenta, Color.green, Color.red, Color.blue, Color.orange, Color.yellow, Color.pink, Color.black));
+    Page(){}
     public Page( ActionListener actionListener, String p1name, int gameSpeed, int botNumber) {
         this.actionListener = actionListener;
         this.botNumber = botNumber;
@@ -127,6 +128,14 @@ public class Page extends JPanel {
                 public void actionPerformed(ActionEvent evt) { mes.get(0).setHappenedKey(KeyEvent.VK_RIGHT);
                 }
             });
+            im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "ENTER");
+            am.put("ENTER", new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    mes.get(0).setHappenedKey(KeyEvent.VK_ENTER);
+                }
+            });
+
         }else if(mes.size() == 2) {
             im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "moveP1UP");
             am.put("moveP1UP", new AbstractAction() {
@@ -236,7 +245,7 @@ public class Page extends JPanel {
         int navarHithe = fontHeight + 8;
         for(int i = 0; i < Integer.min(5, gamers.size()); i++){
             gamer = gamers.get(i);
-            string = String.format("%.2f%% - " + gamer.getName(), gamer.getPercentOwned());
+            string = String.format(gamer.getName());
             color = gamer.getColor();
 
             navardWith = (int)((gamer.getPercentOwned() / highestPercentOwned)*(getWidth()/4));
@@ -337,7 +346,6 @@ public class Page extends JPanel {
         gamers.removeIf(p -> !p.getAlive());
     }
     private void paintnewOwned(Gamer gamer) {
-        // Set boundary
         int maxX = 0;
         int minX = gameArea[0].length;
         int maxY = 0;

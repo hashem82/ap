@@ -39,5 +39,9 @@ public class Me extends Gamer{
             dx = 0;
             dy = 1;
         }
+        //Shoot
+        if (happenedKey == KeyEvent.VK_ENTER){
+
+        }
     }
 }
