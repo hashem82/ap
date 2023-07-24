@@ -107,6 +107,11 @@ public abstract class Gamer implements Comparable<Gamer>{
             rect.getContestedOwner().killed();
         }
     }
+    void checkCollisionme(Rect rect, Me me){
+        if(rect.getContestedOwner() != null && rect.getContestedOwner() != me) {
+            rect.getContestedOwner().killed();
+        }
+    }
 
     public void setCurrentRect(Rect currentRect) {
         this.currentRect = currentRect;

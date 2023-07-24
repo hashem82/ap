@@ -19,6 +19,7 @@ public class Page extends JPanel {
     int botNumber;
     int timernumber = 0;
     int timerspeed;
+    int counterweapon = 0;
     ArrayList<Gamer> gamers = new ArrayList<>();
     ArrayList<Me> mes = new ArrayList<>();
     ArrayList<Draw> draws = new ArrayList<>();
@@ -132,7 +133,9 @@ public class Page extends JPanel {
             am.put("ENTER", new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    mes.get(0).setHappenedKey(KeyEvent.VK_ENTER);
+                    Weapen weapen = new Weapen();
+                    weapen.setOwned(Page.this, mes.get(0));
+                    counterweapon++;
                 }
             });
 
@@ -274,7 +277,12 @@ public class Page extends JPanel {
                 gamer.killed();
             }else{
                 Rect rect = getRect(gamer.getX(), gamer.getY());
-                gamer.checkCollision(rect);
+                if (gamer == mes.get(0)){
+                    mes.get(0).checkCollisionme(rect, mes.get(0));
+                }
+                else {
+                    gamer.checkCollision(rect);
+                }
                 gamer.setCurrentRect(rect);
                 ShakhbeShakh(gamer, rect);
 
@@ -384,9 +392,9 @@ public class Page extends JPanel {
                     if(!shoulddpaint.contains(v) && (v.getOwner() != gamer)){
                         y = v.getY();
                         x = v.getX();
-                        if(outside.contains(v) //If already declared as outside
-                                || x < minX || x > maxX || y < minY || y > maxY //If outside of boundary
-                                || x == gameArea[0].length -1 || x == 0 || y == 0 || y == gameArea.length -1){ // If it is a edge tile
+                        if(outside.contains(v)
+                                || x < minX || x > maxX || y < minY || y > maxY
+                                || x == gameArea[0].length -1 || x == 0 || y == 0 || y == gameArea.length -1){
                             cont = false;
                         }else{
                             shoulddpaint.add(v);
