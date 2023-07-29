@@ -43,5 +43,9 @@ public class Me extends Gamer{
         if (happenedKey == KeyEvent.VK_ENTER){
 
         }
+        //Shoot2
+        if (happenedKey == KeyEvent.VK_SPACE){
+
+        }
     }
 }

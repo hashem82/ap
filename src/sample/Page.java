@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.application.Platform;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +16,7 @@ import java.util.*;
 public class Page extends JPanel {
     final int GameHeigh = 2200;
     final int GameWidth = 2200;
-    final int UNIT_SIZE = 20;
+    final int UNIT_SIZE = 25;
     Rect[][] gameArea;
     int botNumber;
     int timernumber = 0;
@@ -29,6 +31,7 @@ public class Page extends JPanel {
     ActionListener actionListener;
     boolean paused = true;
     boolean Gameover = false;
+    boolean Shoting = true;
     ArrayList<Color> colorList = new ArrayList<>(Arrays.asList(Color.magenta, Color.green, Color.red, Color.blue, Color.orange, Color.yellow, Color.pink, Color.black));
     Page(){}
     public Page( ActionListener actionListener, String p1name, int gameSpeed, int botNumber) {
@@ -138,6 +141,26 @@ public class Page extends JPanel {
                     counterweapon++;
                 }
             });
+            im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "SPACE");
+            am.put("SPACE", new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (Shoting) {
+                        System.out.println("Test weapen2 : ok");
+                        Weapen2 weapen2 = new Weapen2();
+                        weapen2.Shooting(Page.this, mes.get(0));
+                        Shoting = false;
+                    }
+                    Timer timer = new Timer();
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            Platform.runLater(() -> Shoting=true);
+                        }
+                    };
+                    timer.schedule(task , 3000);
+                }
+            });
 
         }else if(mes.size() == 2) {
             im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "moveP1UP");
@@ -229,7 +252,7 @@ public class Page extends JPanel {
             drawditails(g);
         } catch(IndexOutOfBoundsException ignored){
         }
-        Toolkit.getDefaultToolkit().sync();
+       // Toolkit.getDefaultToolkit().sync();
     }
 
     private void drawditails(Graphics g) {
@@ -264,6 +287,7 @@ public class Page extends JPanel {
         if (Gameover){
             end(g);
         }
+
     }
 
     private void ruleofGame(){
@@ -281,7 +305,7 @@ public class Page extends JPanel {
                     mes.get(0).checkCollisionme(rect, mes.get(0));
                 }
                 else {
-                    gamer.checkCollision(rect);
+                    gamer.checkCollisionme(rect, gamer);
                 }
                 gamer.setCurrentRect(rect);
                 ShakhbeShakh(gamer, rect);
@@ -322,8 +346,7 @@ public class Page extends JPanel {
     private void alivebots() {
         for(int i = 0; i < deadBots.size(); i++){
             if(deadBots.get(i).getAlive()){
-                Gamer gamer = new Bot(gameArea.length,gameArea[0].length,
-                        new Color((int)(Math.random() * 0x1000000)));
+                Gamer gamer = new Bot(gameArea.length,gameArea[0].length, new Color((int)(Math.random() * 0x1000000)));
                 startGame(gamer);
                 gamers.add(gamer);
                 deadBots.remove(deadBots.get(i));
@@ -351,7 +374,10 @@ public class Page extends JPanel {
         }else {
             rectGamerMap.put(rect, gamer);
         }
-        gamers.removeIf(p -> !p.getAlive());
+        //gamers.removeIf(p -> !p.getAlive());
+        if(!gamer.getAlive()){
+            gamers.remove(gamer);
+        }
     }
     private void paintnewOwned(Gamer gamer) {
         int maxX = 0;

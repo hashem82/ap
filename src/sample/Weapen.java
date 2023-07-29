@@ -13,6 +13,14 @@ public class Weapen {
                         me.setRectOwned(page.getRect(i, j));
                     }
                 }
+                for (int i = me.getX() - 1; i <= me.getX() + 1; i++) {
+                    for (int j = me.getY() - 7; j <= me.getY() - 5; j++) {
+                        for (int k = 0; k < page.gamers.size(); k++){
+                            if (page.gamers.get(k).getX() == i && page.gamers.get(k).getY() == j)
+                                page.gamers.get(k).killed();
+                        }
+                    }
+                }
             }
         }
         if (page.counterweapon == 0) {
@@ -21,6 +29,14 @@ public class Weapen {
                 for (int i = me.getX() - 1; i <= me.getX() + 1; i++) {
                     for (int j = me.getY() - 7; j <= me.getY() - 5; j++) {
                         me.setRectOwned(page.getRect(i, j));
+                    }
+                }
+                for (int i = me.getX() - 1; i <= me.getX() + 1; i++) {
+                    for (int j = me.getY() - 7; j <= me.getY() - 5; j++) {
+                        for (int k = 0; k < page.gamers.size(); k++){
+                            if (page.gamers.get(k).getX() == i && page.gamers.get(k).getY() == j)
+                                page.gamers.get(k).killed();
+                        }
                     }
                 }
             }
@@ -33,6 +49,14 @@ public class Weapen {
                         me.setRectOwned(page.getRect(i, j));
                     }
                 }
+                for (int i = me.getX() - 1; i <= me.getX() + 1; i++) {
+                    for (int j = me.getY() - 7; j <= me.getY() - 5; j++) {
+                        for (int k = 0; k < page.gamers.size(); k++){
+                            if (page.gamers.get(k).getX() == i && page.gamers.get(k).getY() == j)
+                                page.gamers.get(k).killed();
+                        }
+                    }
+                }
             }
         }
         if (page.counterweapon == 0){
@@ -41,6 +65,14 @@ public class Weapen {
                 for (int i = me.getX()  - 7; i <= me.getX() - 5; i++) {
                     for (int j = me.getY() - 1; j <= me.getY() + 1; j++) {
                         me.setRectOwned(page.getRect(i, j));
+                    }
+                }
+                for (int i = me.getX() - 1; i <= me.getX() + 1; i++) {
+                    for (int j = me.getY() - 7; j <= me.getY() - 5; j++) {
+                        for (int k = 0; k < page.gamers.size(); k++){
+                            if (page.gamers.get(k).getX() == i && page.gamers.get(k).getY() == j)
+                                page.gamers.get(k).killed();
+                        }
                     }
                 }
             }

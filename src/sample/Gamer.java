@@ -7,6 +7,7 @@ public abstract class Gamer implements Comparable<Gamer>{
 
     ArrayList<Rect> rectsOwned = new ArrayList<>();
     ArrayList<Rect> rectsContested = new ArrayList<>();
+    //ArrayList<Rect> rectwhite = new ArrayList<>();
     int Height;
     int Width;
     int x;
@@ -74,6 +75,13 @@ public abstract class Gamer implements Comparable<Gamer>{
         rect.setContestedOwner(null);
     }
 
+    /*public void makewhite(Rect rect){
+        rectwhite.add(rect);
+        rect.setOwner(null);
+        rect.setContestedOwner(null);
+    }*/
+
+
     public void removeRectOwned(Rect rect){
         rectsOwned.remove(rect);
     }
@@ -102,13 +110,8 @@ public abstract class Gamer implements Comparable<Gamer>{
         rectsContested.clear();
     }
 
-    void checkCollision(Rect rect){
-        if(rect.getContestedOwner() != null) {
-            rect.getContestedOwner().killed();
-        }
-    }
-    void checkCollisionme(Rect rect, Me me){
-        if(rect.getContestedOwner() != null && rect.getContestedOwner() != me) {
+    void checkCollisionme(Rect rect, Gamer gamer){
+        if(rect.getContestedOwner() != null && rect.getContestedOwner() != this) {
             rect.getContestedOwner().killed();
         }
     }
