@@ -16,9 +16,9 @@
                   <Font name="Ink Free" size="24.0" />
                </font>
             </Button>
-            <TextField fx:id="Nbot" layoutX="226.0" layoutY="68.0" />
-            <TextField fx:id="Nspeed" layoutX="226.0" layoutY="115.0" />
-            <TextField fx:id="Ndificult" layoutX="226.0" layoutY="164.0" />
+            <TextField fx:id="Nbot" layoutX="226.0" layoutY="68.0" text="10" />
+            <TextField fx:id="Nspeed" layoutX="226.0" layoutY="115.0" promptText="1-10" text="5" />
+            <TextField fx:id="Ndificult" layoutX="226.0" layoutY="164.0" text="1" />
             <Text layoutX="71.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Bot">
                <font>
                   <Font name="Ink Free" size="24.0" />

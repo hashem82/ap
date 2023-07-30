@@ -291,11 +291,11 @@ public class Page extends JPanel {
     }
 
     private void ruleofGame(){
-        Gamer gamer;
+        Gamer gamer = null;
         rectGamerMap.clear();
         for (int i = 0; i < gamers.size(); i++) {
             gamer = gamers.get(i);
-            gamer.move();
+            gamer.move(Page.this);
 
             if(gamer.getX() < 0 || gamer.getX() >= GameWidth || gamer.getY() < 0 || gamer.getY() >= GameHeigh){
                 gamer.killed();
@@ -333,7 +333,10 @@ public class Page extends JPanel {
         if(allKilled){
             Gameover = true;
         }
-        gamers.removeIf(p -> !p.getAlive());
+        //gamers.removeIf(p -> !p.getAlive());
+        if(!gamer.getAlive()){
+            gamers.remove(gamer);
+        }
     }
 
     private void end(Graphics g) {

@@ -13,29 +13,29 @@ public class Me extends Gamer{
         this.happenedKey = happenedKey;
     }
     @Override
-    void move() {
+    void move(Page page) {
         x += dx;
         y += dy;
     }
 
     void updateKey() {
         //Left
-        if((happenedKey == KeyEvent.VK_LEFT || happenedKey == KeyEvent.VK_A) && dx != 1) {
+        if((happenedKey == KeyEvent.VK_LEFT || happenedKey == KeyEvent.VK_A) /*&& dx != 1*/) {
             dx = -1;
             dy = 0;
         }
         //Right
-        if((happenedKey == KeyEvent.VK_RIGHT || happenedKey == KeyEvent.VK_D) && dx != -1) {
+        if((happenedKey == KeyEvent.VK_RIGHT || happenedKey == KeyEvent.VK_D) /*&& dx != -1*/) {
             dx = 1;
             dy = 0;
         }
         //Up
-        if((happenedKey == KeyEvent.VK_UP || happenedKey == KeyEvent.VK_W) && dy != 1) {
+        if((happenedKey == KeyEvent.VK_UP || happenedKey == KeyEvent.VK_W) /*&& dy != 1*/) {
             dx = 0;
             dy = -1;
         }
         //Down
-        if((happenedKey == KeyEvent.VK_DOWN || happenedKey == KeyEvent.VK_S) && dy != -1) {
+        if((happenedKey == KeyEvent.VK_DOWN || happenedKey == KeyEvent.VK_S) /*&& dy != -1*/) {
             dx = 0;
             dy = 1;
         }

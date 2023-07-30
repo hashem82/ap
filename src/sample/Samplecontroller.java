@@ -28,6 +28,7 @@ public class Samplecontroller {
         File myfile1 = new File("src/speed.txt");
         File myfile2 = new File("src/name1.txt");
         File myfile3 = new File("src/name2.txt");
+        File myfile4 = new File("src/dificult.txt");
         if (!myfile.exists()) {
             try {
                 myfile.createNewFile();
@@ -56,6 +57,13 @@ public class Samplecontroller {
                 p.printStackTrace();
             }
         }
+        if (!myfile4.exists()) {
+            try {
+                myfile3.createNewFile();
+            } catch (IOException b) {
+                b.printStackTrace();
+            }
+        }
         try (FileWriter fw = new FileWriter("src/bot.txt", false)) {
             PrintWriter pw = new PrintWriter(fw);
             pw.println(Nbot.getText());
@@ -80,6 +88,13 @@ public class Samplecontroller {
         try (FileWriter fw = new FileWriter("src/name2.txt", false)) {
             PrintWriter pw = new PrintWriter(fw);
             pw.println(G2name.getText());
+            pw.close();
+        } catch (IOException v) {
+            v.printStackTrace();
+        }
+        try (FileWriter fw = new FileWriter("src/dificult.txt", false)) {
+            PrintWriter pw = new PrintWriter(fw);
+            pw.println(Ndificult.getText());
             pw.close();
         } catch (IOException v) {
             v.printStackTrace();

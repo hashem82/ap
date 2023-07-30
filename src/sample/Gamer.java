@@ -14,6 +14,8 @@ public abstract class Gamer implements Comparable<Gamer>{
     int y;
     int dx;
     int dy;
+    int lasthomeX;
+    int lasthomeY;
     Color color;
     String name;
     Boolean Alive = true;
@@ -51,7 +53,7 @@ public abstract class Gamer implements Comparable<Gamer>{
         }
     }
 
-    abstract void move();
+    abstract void move(Page page);
 
     public void killed(){
         Alive = false;
@@ -71,6 +73,8 @@ public abstract class Gamer implements Comparable<Gamer>{
 
     public void setRectOwned(Rect rect){
         rectsOwned.add(rect);
+        lasthomeX = rect.getX();
+        lasthomeY = rect.getY();
         rect.setOwner(this);
         rect.setContestedOwner(null);
     }
