@@ -62,7 +62,7 @@ public class Weapen {
                         for (int k = 0; k < page.gamers.size(); k++){
                             if (page.gamers.get(k).getX() == i && page.gamers.get(k).getY() == j) {
                                 page.gamers.get(k).killed();
-                                System.out.println(page.gamers.get(k).getName() + " by weapen1");
+                                System.out.println(page.gamers.get(k).getName() +  "by weapen1");
                             }
                         }
                     }

@@ -1,12 +1,17 @@
 package sample;
 
+import javafx.application.Platform;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Weapen2 {
     public Weapen2(){
 
     }
+    boolean setnull = false;
 
     public void Shooting(Page page, Me me){
         //DOWN
@@ -17,6 +22,17 @@ public class Weapen2 {
                         gamer.killed();
                         String s = gamer.getName();
                         System.out.println(s + " killed by weapen2");
+                        /*for (int k = me.getY() + 4; k < gamer.getY(); k++){
+                            me.setRectOwned(page.getRect(me.getX(), k));
+                        }
+                                setnull = true;
+                        if (setnull){
+                            for (int k = me.getY() + 4; k < gamer.getY(); k++){
+                                page.getRect(me.getX(), k).setOwner(null);
+                                me.removeRectOwned(page.getRect(me.getX(), k));
+                            }
+                            setnull = false;
+                        }*/
                     }
                 }
             }
@@ -29,6 +45,17 @@ public class Weapen2 {
                         gamer.killed();
                         String s = gamer.getName();
                         System.out.println(s + " killed by weapen2");
+                        /*for (int k = me.getY() - 4; k > gamer.getY(); k--){
+                            me.setRectOwned(page.getRect(me.getX(), k));
+                        }
+                                setnull = true;
+                        if (setnull){
+                            for (int k = me.getY() - 4; k > gamer.getY(); k--){
+                                page.getRect(me.getX(), k).setOwner(null);
+                                me.removeRectOwned(page.getRect(me.getX(), k));
+                            }
+                            setnull = false;
+                        }*/
                     }
                 }
             }
@@ -41,6 +68,17 @@ public class Weapen2 {
                         gamer.killed();
                         String s = gamer.getName();
                         System.out.println(s + " killed by weapen2");
+                        /*for (int k = me.getX() + 4; k < gamer.getX(); k++){
+                            me.setRectOwned(page.getRect(k, me.getY()));
+                        }
+                                setnull = true;
+                        if (setnull){
+                            for (int k = me.getX() + 4; k < gamer.getX(); k++){
+                                page.getRect(k, me.getY()).setOwner(null);
+                                me.removeRectOwned(page.getRect(k, me.getY()));
+                            }
+                            setnull = false;
+                        }*/
                     }
                 }
             }
@@ -53,6 +91,17 @@ public class Weapen2 {
                         gamer.killed();
                         String s = gamer.getName();
                         System.out.println(s + " killed by weapen2");
+                        /*for (int k = me.getX() - 4; k > gamer.getX(); k--){
+                            me.setRectOwned(page.getRect(k, me.getY()));
+                        }
+                                setnull = true;
+                        if (setnull){
+                            for (int k = me.getX() - 4; k > gamer.getX(); k--){
+                                page.getRect(k, me.getY()).setOwner(null);
+                                me.removeRectOwned(page.getRect(k, me.getY()));
+                            }
+                            setnull = false;
+                        }*/
                     }
                 }
             }

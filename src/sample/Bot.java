@@ -96,6 +96,16 @@ public class Bot extends Gamer{
         }
         if (Dificult > 2){
             goon(page.mes.get(0).getX(), page.mes.get(0).getY());
+            if (Dificult > 3){
+                for (int i = this.getX() - 3; i <= this.getX() + 3; i++){
+                    for (int j = this.getY() - 3; j <= this.getY() + 3; j++){
+                        if (page.getRect(i, j).getContestedOwner() == page.mes.get(0) /*&& page.getRect(i, j).getContestedOwner() != this*/){
+                            goon(i, j);
+                            return;
+                        }
+                    }
+                }
+            }
             return;
         }
 

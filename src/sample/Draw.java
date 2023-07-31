@@ -45,17 +45,17 @@ public class Draw {
             g.setFont(new Font("System", Font.PLAIN, 12));
             FontMetrics fontMetrics = g.getFontMetrics();
 
-            for (Gamer gamer1 : gamers) {
-                X = (gamer1.getX() - me.getX()) * UNIT_SIZE + ((width - UNIT_SIZE) / 2);
-                Y = (gamer1.getY() - me.getY()) * UNIT_SIZE + ((height - UNIT_SIZE) / 2);
-                if (gamer1 != me) {
-                    X += ((gamer1.getDx() - me.getDx()) * UNIT_SIZE * ((page.getTimernumber() + 1) / (double) page.getTimerspeed()));
-                    Y += ((gamer1.getDy() - me.getDy()) * UNIT_SIZE * ((page.getTimernumber() + 1) / (double) page.getTimerspeed()));
+            for (int gg = 0; gg < gamers.size(); gg++) {
+                X = (gamers.get(gg).getX() - me.getX()) * UNIT_SIZE + ((width - UNIT_SIZE) / 2);
+                Y = (gamers.get(gg).getY() - me.getY()) * UNIT_SIZE + ((height - UNIT_SIZE) / 2);
+                if (gamers.get(gg) != me) {
+                    X += ((gamers.get(gg).getDx() - me.getDx()) * UNIT_SIZE * ((page.getTimernumber() + 1) / (double) page.getTimerspeed()));
+                    Y += ((gamers.get(gg).getDy() - me.getDy()) * UNIT_SIZE * ((page.getTimernumber() + 1) / (double) page.getTimerspeed()));
                 }
                 g.setColor(Color.BLACK);
-                g.drawString(gamer1.getName(), X + (UNIT_SIZE - fontMetrics.stringWidth(gamer1.getName()))/2, Y + UNIT_SIZE + 16);
+                g.drawString(gamers.get(gg).getName(), X + (UNIT_SIZE - fontMetrics.stringWidth(gamers.get(gg).getName()))/2, Y + UNIT_SIZE + 16);
                 if (!(X + UNIT_SIZE < 0 || X > width || Y + UNIT_SIZE < 0 || Y > height)) {
-                    g.setColor(gamer1.getColor());
+                    g.setColor(gamers.get(gg).getColor());
                     g.fillRect(X, Y, UNIT_SIZE, UNIT_SIZE);
                 }
             }
