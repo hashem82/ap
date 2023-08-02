@@ -11,7 +11,6 @@ public class Weapen2 {
     public Weapen2(){
 
     }
-    boolean setnull = false;
 
     public void Shooting(Page page, Me me){
         //DOWN
@@ -22,17 +21,23 @@ public class Weapen2 {
                         gamer.killed();
                         String s = gamer.getName();
                         System.out.println(s + " killed by weapen2");
-                        /*for (int k = me.getY() + 4; k < gamer.getY(); k++){
+                        for (int k = me.getY() + 4; k < gamer.getY(); k++){
                             me.setRectOwned(page.getRect(me.getX(), k));
                         }
-                                setnull = true;
-                        if (setnull){
-                            for (int k = me.getY() + 4; k < gamer.getY(); k++){
-                                page.getRect(me.getX(), k).setOwner(null);
-                                me.removeRectOwned(page.getRect(me.getX(), k));
+                        Timer timer = new Timer();
+                        TimerTask task = new TimerTask() {
+                            @Override
+                            public void run() {
+                                Platform.runLater(() -> {
+                                    for (int k = me.getY() + 4; k < gamer.getY(); k++){
+                                        page.getRect(me.getX(), k).setOwner(null);
+                                        me.removeRectOwned(page.getRect(me.getX(), k));
+                                    }
+                                });
                             }
-                            setnull = false;
-                        }*/
+                        };
+                        timer.schedule(task , 100);
+                        return;
                     }
                 }
             }
@@ -45,17 +50,23 @@ public class Weapen2 {
                         gamer.killed();
                         String s = gamer.getName();
                         System.out.println(s + " killed by weapen2");
-                        /*for (int k = me.getY() - 4; k > gamer.getY(); k--){
+                        for (int k = me.getY() - 4; k > gamer.getY(); k--){
                             me.setRectOwned(page.getRect(me.getX(), k));
                         }
-                                setnull = true;
-                        if (setnull){
-                            for (int k = me.getY() - 4; k > gamer.getY(); k--){
-                                page.getRect(me.getX(), k).setOwner(null);
-                                me.removeRectOwned(page.getRect(me.getX(), k));
+                        Timer timer = new Timer();
+                        TimerTask task = new TimerTask() {
+                            @Override
+                            public void run() {
+                                Platform.runLater(() -> {
+                                    for (int k = me.getY() - 4; k > gamer.getY(); k--){
+                                        page.getRect(me.getX(), k).setOwner(null);
+                                        me.removeRectOwned(page.getRect(me.getX(), k));
+                                    }
+                                });
                             }
-                            setnull = false;
-                        }*/
+                        };
+                        timer.schedule(task , 100);
+                        return;
                     }
                 }
             }
@@ -68,17 +79,23 @@ public class Weapen2 {
                         gamer.killed();
                         String s = gamer.getName();
                         System.out.println(s + " killed by weapen2");
-                        /*for (int k = me.getX() + 4; k < gamer.getX(); k++){
+                        for (int k = me.getX() + 4; k < gamer.getX(); k++){
                             me.setRectOwned(page.getRect(k, me.getY()));
                         }
-                                setnull = true;
-                        if (setnull){
-                            for (int k = me.getX() + 4; k < gamer.getX(); k++){
-                                page.getRect(k, me.getY()).setOwner(null);
-                                me.removeRectOwned(page.getRect(k, me.getY()));
+                        Timer timer = new Timer();
+                        TimerTask task = new TimerTask() {
+                            @Override
+                            public void run() {
+                                Platform.runLater(() -> {
+                                    for (int k = me.getX() + 4; k < gamer.getX(); k++){
+                                        page.getRect(k, me.getY()).setOwner(null);
+                                        me.removeRectOwned(page.getRect(k, me.getY()));
+                                    }
+                                });
                             }
-                            setnull = false;
-                        }*/
+                        };
+                        timer.schedule(task , 300);
+                        return;
                     }
                 }
             }
@@ -91,17 +108,23 @@ public class Weapen2 {
                         gamer.killed();
                         String s = gamer.getName();
                         System.out.println(s + " killed by weapen2");
-                        /*for (int k = me.getX() - 4; k > gamer.getX(); k--){
+                        for (int k = me.getX() - 4; k > gamer.getX(); k--){
                             me.setRectOwned(page.getRect(k, me.getY()));
                         }
-                                setnull = true;
-                        if (setnull){
-                            for (int k = me.getX() - 4; k > gamer.getX(); k--){
-                                page.getRect(k, me.getY()).setOwner(null);
-                                me.removeRectOwned(page.getRect(k, me.getY()));
+                        Timer timer = new Timer();
+                        TimerTask task = new TimerTask() {
+                            @Override
+                            public void run() {
+                                Platform.runLater(() -> {
+                                    for (int k = me.getX() - 4; k > gamer.getX(); k--){
+                                        page.getRect(k, me.getY()).setOwner(null);
+                                        me.removeRectOwned(page.getRect(k, me.getY()));
+                                    }
+                                });
                             }
-                            setnull = false;
-                        }*/
+                        };
+                        timer.schedule(task , 300);
+                        return;
                     }
                 }
             }

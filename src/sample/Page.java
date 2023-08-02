@@ -146,10 +146,10 @@ public class Page extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (Shoting) {
+                        Shoting = false;
                         System.out.println("Test weapen2 : ok");
                         Weapen2 weapen2 = new Weapen2();
                         weapen2.Shooting(Page.this, mes.get(0));
-                        Shoting = false;
                     }
                     Timer timer = new Timer();
                     TimerTask task = new TimerTask() {
@@ -252,7 +252,7 @@ public class Page extends JPanel {
             drawditails(g);
         } catch(IndexOutOfBoundsException ignored){
         }
-       // Toolkit.getDefaultToolkit().sync();
+        //Toolkit.getDefaultToolkit().sync();
     }
 
     private void drawditails(Graphics g) {
