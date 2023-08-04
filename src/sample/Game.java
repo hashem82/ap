@@ -107,7 +107,7 @@ public class Game extends JFrame implements ActionListener {
                 cards.add(page, "board");
                 setState(STATE.GAME);
                 break;
-            case "Multiplayer(offline)":
+            case "Multiplayer(Offline)":
                 page = new Page(this, name1, name2, speed, bot);
                 cards.add(page, "board");
                 setState(STATE.GAME);

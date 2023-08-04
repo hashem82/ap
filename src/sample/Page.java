@@ -65,7 +65,7 @@ public class Page extends JPanel {
         draws.add(new Draw(UNIT_SIZE, this, mes.get(0), gamers));
         gamer_draw.put(mes.get(0), draws.get(0));
         draws.add(new Draw(UNIT_SIZE, this, mes.get(1), gamers));
-        gamer_draw.put(mes.get(1), draws.get(0));
+        gamer_draw.put(mes.get(1), draws.get(1));
     }
 
     private void inPage(){

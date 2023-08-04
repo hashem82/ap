@@ -13,30 +13,35 @@ public class Weapen2 {
     }
 
     public void Shooting(Page page, Me me){
+        int Y = me.getY();
+        int X = me.getX();
+        int BY;
+        int BX;
         //DOWN
         if (me.getDx() == 0 && me.getDy() == 1){
-            for (int i = me.getY()+1; i < page.GameHeigh; i++){
+            for (int i = Y +1; i < page.GameHeigh; i++){
                 for (Gamer gamer : page.gamers){
-                    if (gamer.getY() == i && gamer.getX() == me.getX()) {
+                    if (gamer.getY() == i && gamer.getX() == X ) {
+                        BY = i;
                         gamer.killed();
                         String s = gamer.getName();
                         System.out.println(s + " killed by weapen2");
-                        for (int k = me.getY() + 4; k < gamer.getY(); k++){
-                            me.setRectOwned(page.getRect(me.getX(), k));
+                        for (int k = Y + 4; k < gamer.getY(); k++){
+                            me.setRectOwned(page.getRect(X, k));
                         }
                         Timer timer = new Timer();
                         TimerTask task = new TimerTask() {
                             @Override
                             public void run() {
                                 Platform.runLater(() -> {
-                                    for (int k = me.getY() + 4; k < gamer.getY(); k++){
-                                        page.getRect(me.getX(), k).setOwner(null);
-                                        me.removeRectOwned(page.getRect(me.getX(), k));
+                                    for (int k = Y + 4; k < BY; k++){
+                                        page.getRect(X, k).setOwner(null);
+                                        me.removeRectOwned(page.getRect(X, k));
                                     }
                                 });
                             }
                         };
-                        timer.schedule(task , 100);
+                        timer.schedule(task , page.timerspeed*27);
                         return;
                     }
                 }
@@ -44,28 +49,29 @@ public class Weapen2 {
         }
         //UP
         if (me.getDx() == 0 && me.getDy() == -1){
-            for (int i = me.getY()-1; i > 0; i--){
+            for (int i = Y-1; i > 0; i--){
                 for (Gamer gamer : page.gamers){
-                    if (gamer.getY() == i && gamer.getX() == me.getX()) {
+                    if (gamer.getY() == i && gamer.getX() == X) {
+                        BY = i;
                         gamer.killed();
                         String s = gamer.getName();
                         System.out.println(s + " killed by weapen2");
-                        for (int k = me.getY() - 4; k > gamer.getY(); k--){
-                            me.setRectOwned(page.getRect(me.getX(), k));
+                        for (int k = Y - 4; k > BY; k--){
+                            me.setRectOwned(page.getRect(X, k));
                         }
                         Timer timer = new Timer();
                         TimerTask task = new TimerTask() {
                             @Override
                             public void run() {
                                 Platform.runLater(() -> {
-                                    for (int k = me.getY() - 4; k > gamer.getY(); k--){
-                                        page.getRect(me.getX(), k).setOwner(null);
-                                        me.removeRectOwned(page.getRect(me.getX(), k));
+                                    for (int k = Y - 4; k > BY; k--){
+                                        page.getRect(X, k).setOwner(null);
+                                        me.removeRectOwned(page.getRect(X, k));
                                     }
                                 });
                             }
                         };
-                        timer.schedule(task , 100);
+                        timer.schedule(task , page.timerspeed*27);
                         return;
                     }
                 }
@@ -73,28 +79,29 @@ public class Weapen2 {
         }
         //RIGHT
         if (me.getDy() == 0 && me.getDx() == 1){
-            for (int i = me.getX()+1; i < page.GameWidth; i++){
+            for (int i = X+1; i < page.GameWidth; i++){
                 for (Gamer gamer : page.gamers){
-                    if (gamer.getX() == i && gamer.getY() == me.getY()) {
+                    if (gamer.getX() == i && gamer.getY() == Y) {
+                        BX = i;
                         gamer.killed();
                         String s = gamer.getName();
                         System.out.println(s + " killed by weapen2");
-                        for (int k = me.getX() + 4; k < gamer.getX(); k++){
-                            me.setRectOwned(page.getRect(k, me.getY()));
+                        for (int k = X + 4; k < BX; k++){
+                            me.setRectOwned(page.getRect(k, Y));
                         }
                         Timer timer = new Timer();
                         TimerTask task = new TimerTask() {
                             @Override
                             public void run() {
                                 Platform.runLater(() -> {
-                                    for (int k = me.getX() + 4; k < gamer.getX(); k++){
-                                        page.getRect(k, me.getY()).setOwner(null);
-                                        me.removeRectOwned(page.getRect(k, me.getY()));
+                                    for (int k = X + 4; k < BX; k++){
+                                        page.getRect(k, Y).setOwner(null);
+                                        me.removeRectOwned(page.getRect(k, Y));
                                     }
                                 });
                             }
                         };
-                        timer.schedule(task , 300);
+                        timer.schedule(task , page.timerspeed*27);
                         return;
                     }
                 }
@@ -102,28 +109,29 @@ public class Weapen2 {
         }
         //LEFT
         if (me.getDy() == 0 && me.getDx() == -1){
-            for (int i = me.getX()-1; i > 0; i--){
+            for (int i = X-1; i > 0; i--){
                 for (Gamer gamer : page.gamers){
-                    if (gamer.getX() == i && gamer.getY() == me.getY()) {
+                    if (gamer.getX() == i && gamer.getY() == Y) {
+                        BX = i;
                         gamer.killed();
                         String s = gamer.getName();
                         System.out.println(s + " killed by weapen2");
-                        for (int k = me.getX() - 4; k > gamer.getX(); k--){
-                            me.setRectOwned(page.getRect(k, me.getY()));
+                        for (int k = X - 4; k > BX; k--){
+                            me.setRectOwned(page.getRect(k, Y));
                         }
                         Timer timer = new Timer();
                         TimerTask task = new TimerTask() {
                             @Override
                             public void run() {
                                 Platform.runLater(() -> {
-                                    for (int k = me.getX() - 4; k > gamer.getX(); k--){
-                                        page.getRect(k, me.getY()).setOwner(null);
-                                        me.removeRectOwned(page.getRect(k, me.getY()));
+                                    for (int k = X - 4; k > BX; k--){
+                                        page.getRect(k, Y).setOwner(null);
+                                        me.removeRectOwned(page.getRect(k, Y));
                                     }
                                 });
                             }
                         };
-                        timer.schedule(task , 300);
+                        timer.schedule(task , page.timerspeed*27);
                         return;
                     }
                 }
