@@ -89,6 +89,7 @@ public abstract class Gamer implements Comparable<Gamer>{
     public void removeRectOwned(Rect rect){
         rectsOwned.remove(rect);
     }
+    public void removeRectContested(Rect rect){ rectsContested.remove(rect); }
 
     public ArrayList<Rect> getRectsOwned() {
         return rectsOwned;

@@ -46,6 +46,26 @@ public class Weapen2 {
                     }
                 }
             }
+            for (int j = me.getY() + 1; j < page.GameHeigh; j++){
+                if (page.getRect(X, j).owner == me) {
+                    me.removeRectOwned(page.getRect(X, j));
+                    page.getRect(X, j).setOwner(null);
+                }
+                me.setRectsContested(page.getRect(X, j));
+            }
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    Platform.runLater(() -> {
+                        for (int k = me.getY() + 1; k < page.GameHeigh; k++){
+                            page.getRect(X, k).setContestedOwner(null);
+                            me.removeRectContested(page.getRect(X, k));
+                        }
+                    });
+                }
+            };
+            timer.schedule(task , page.timerspeed*27);
         }
         //UP
         if (me.getDx() == 0 && me.getDy() == -1){
@@ -76,6 +96,26 @@ public class Weapen2 {
                     }
                 }
             }
+            for (int j = me.getY() - 1; j > 0; j--){
+                if (page.getRect(X, j).owner == me) {
+                    me.removeRectOwned(page.getRect(X, j));
+                    page.getRect(X, j).setOwner(null);
+                }
+                me.setRectsContested(page.getRect(X, j));
+            }
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    Platform.runLater(() -> {
+                        for (int k = me.getY() - 1; k > 0; k--){
+                            page.getRect(X, k).setContestedOwner(null);
+                            me.removeRectContested(page.getRect(X, k));
+                        }
+                    });
+                }
+            };
+            timer.schedule(task , page.timerspeed*27);
         }
         //RIGHT
         if (me.getDy() == 0 && me.getDx() == 1){
@@ -106,6 +146,26 @@ public class Weapen2 {
                     }
                 }
             }
+            for (int j = me.getX() + 1; j < page.GameWidth; j++){
+                if (page.getRect(j, Y).owner == me) {
+                    me.removeRectOwned(page.getRect(j, Y));
+                    page.getRect(j, Y).setOwner(null);
+                }
+                me.setRectsContested(page.getRect(j, Y));
+            }
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    Platform.runLater(() -> {
+                        for (int k = me.getX() + 1; k < page.GameWidth; k++){
+                            page.getRect(k, Y).setContestedOwner(null);
+                            me.removeRectContested(page.getRect(k, Y));
+                        }
+                    });
+                }
+            };
+            timer.schedule(task , page.timerspeed*27);
         }
         //LEFT
         if (me.getDy() == 0 && me.getDx() == -1){
@@ -136,6 +196,26 @@ public class Weapen2 {
                     }
                 }
             }
+            for (int j = me.getX() - 1; j > 0; j--){
+                if (page.getRect(j, Y).owner == me) {
+                    me.removeRectOwned(page.getRect(j, Y));
+                    page.getRect(j, Y).setOwner(null);
+                }
+                me.setRectsContested(page.getRect(j, Y));
+            }
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    Platform.runLater(() -> {
+                        for (int k = me.getX() - 1; k > 0; k--){
+                            page.getRect(k, Y).setContestedOwner(null);
+                            me.removeRectContested(page.getRect(k, Y));
+                        }
+                    });
+                }
+            };
+            timer.schedule(task , page.timerspeed*27);
         }
     }
 }
