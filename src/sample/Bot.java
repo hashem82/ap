@@ -22,6 +22,8 @@ public class Bot extends Gamer{
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 Dificult = Integer.parseInt(data);
+                if (Dificult < 1)
+                    Dificult = 1;
             }
             myReader.close();
         } catch (FileNotFoundException er) {

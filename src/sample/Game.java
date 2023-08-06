@@ -58,6 +58,8 @@ public class Game extends JFrame implements ActionListener {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 name2 = data;
+                if (name2.equals(""))
+                    name2 = "null";
             }
             myReader.close();
         } catch (FileNotFoundException er) {
@@ -70,6 +72,8 @@ public class Game extends JFrame implements ActionListener {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 name1 = data;
+                if (name1.equals(""))
+                    name1 = "null";
             }
             myReader.close();
         } catch (FileNotFoundException er) {
@@ -82,6 +86,8 @@ public class Game extends JFrame implements ActionListener {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 bot = Integer.parseInt(data);
+                if (bot < 1)
+                    bot = 1;
             }
             myReader.close();
         } catch (FileNotFoundException er) {
@@ -94,6 +100,10 @@ public class Game extends JFrame implements ActionListener {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 speed = Integer.parseInt(data);
+                if (speed > 10)
+                    speed = 10;
+                else if (speed < 1)
+                    speed = 1;
             }
             myReader.close();
         } catch (FileNotFoundException er) {

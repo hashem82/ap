@@ -18,10 +18,12 @@ public class Page extends JPanel {
     final int GameWidth = 2200;
     final int UNIT_SIZE = 25;
     Rect[][] gameArea;
+    int pointrect;
     int botNumber;
     int timernumber = 0;
     int timerspeed;
     int counterweapon = 0;
+    int counterweapon2 = 0;
     ArrayList<Gamer> gamers = new ArrayList<>();
     ArrayList<Me> mes = new ArrayList<>();
     ArrayList<Draw> draws = new ArrayList<>();
@@ -32,6 +34,7 @@ public class Page extends JPanel {
     boolean paused = true;
     boolean Gameover = false;
     boolean Shoting = true;
+    boolean Shoting2 = true;
     ArrayList<Color> colorList = new ArrayList<>(Arrays.asList(Color.magenta, Color.green, Color.red, Color.blue, Color.orange, Color.yellow, Color.pink, Color.black));
     Page(){}
     public Page( ActionListener actionListener, String p1name, int gameSpeed, int botNumber) {
@@ -187,6 +190,35 @@ public class Page extends JPanel {
                     mes.get(1).setHappenedKey(KeyEvent.VK_RIGHT);
                 }
             });
+            im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "enterP1");
+            am.put("enterP1", new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Weapen weapen = new Weapen();
+                    weapen.setOwned(Page.this, mes.get(1));
+                    counterweapon++;
+                }
+            });
+            im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "spaceP1");
+            am.put("spaceP1", new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (Shoting) {
+                        Shoting = false;
+                        System.out.println("Test weapen2 : ok");
+                        Weapen2 weapen2 = new Weapen2();
+                        weapen2.Shooting(Page.this, mes.get(1));
+                    }
+                    Timer timer = new Timer();
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            Platform.runLater(() -> Shoting=true);
+                        }
+                    };
+                    timer.schedule(task , 3000);
+                }
+            });
             im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), "moveP2UP");
             am.put("moveP2UP", new AbstractAction() {
                 public void actionPerformed(ActionEvent evt) {
@@ -209,6 +241,37 @@ public class Page extends JPanel {
             am.put("moveP2RIGHT", new AbstractAction() {
                 public void actionPerformed(ActionEvent evt) {
                     mes.get(0).setHappenedKey(KeyEvent.VK_D);
+                }
+            });
+            im.put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "enterP2");
+            am.put("enterP2", new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (counterweapon2 == 0) {
+                        Weapen weapen = new Weapen();
+                        weapen.setOwned(Page.this, mes.get(0));
+                        counterweapon2++;
+                    }
+                }
+            });
+            im.put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), "spaceP2");
+            am.put("spaceP2", new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (Shoting2) {
+                        Shoting2 = false;
+                        System.out.println("Test weapen2 : ok");
+                        Weapen2 weapen2 = new Weapen2();
+                        weapen2.Shooting(Page.this, mes.get(0));
+                    }
+                    Timer timer = new Timer();
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            Platform.runLater(() -> Shoting2 = true);
+                        }
+                    };
+                    timer.schedule(task , 3000);
                 }
             });
         }
@@ -261,8 +324,12 @@ public class Page extends JPanel {
         int fontHeight = fontMetrics.getHeight();
 
         Gamer gamer;
+        int point;
         String string;
         Color color;
+
+        if (!Gameover)
+            pointrect = mes.get(0).rectsOwned.size();
 
         double highestPercentOwned = gamers.get(0).getPercentOwned();
         Collections.sort(gamers);
@@ -273,6 +340,7 @@ public class Page extends JPanel {
             gamer = gamers.get(i);
             string = String.format(gamer.getName());
             color = gamer.getColor();
+            point = gamer.rectsOwned.size();
 
             navardWith = (int)((gamer.getPercentOwned() / highestPercentOwned)*(getWidth()/4));
             g.setColor(gamer.getColor());
@@ -282,7 +350,7 @@ public class Page extends JPanel {
             }else{
                 g.setColor(Color.BLACK);
             }
-            g.drawString(string, 2+getWidth() -  navardWith,  navarHithe*i + fontHeight);
+            g.drawString(string + "   " + point, 2+getWidth() -  navardWith,  navarHithe*i + fontHeight);
         }
         if (Gameover){
             end(g);
@@ -344,6 +412,11 @@ public class Page extends JPanel {
         g.setFont(new Font("Ink Free",Font.BOLD,75));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("Game Over", (getWidth() - metrics2.stringWidth("Game Over"))/2, getHeight()/2);
+
+        g.setColor(Color.blue);
+        g.setFont(new Font("Ink Free",Font.BOLD,40));
+        FontMetrics metrics1 = getFontMetrics(g.getFont());
+        g.drawString("Your Rects Owned: " + pointrect, (getWidth() - metrics1.stringWidth("Your Rects Owned: " + pointrect))/2, g.getFont().getSize());
     }
 
     private void alivebots() {
