@@ -434,14 +434,18 @@ public class Page extends JPanel {
         if(rectGamerMap.containsKey(rect)) {
             for(Map.Entry<Rect, Gamer> entry : rectGamerMap.entrySet()) {
                 if (entry.getKey() == rect) {
-                    if (entry.getValue().getRectsContested().size() > gamer.getRectsContested().size()) {
+                    if (entry.getValue().getRectsContested().size() < gamer.getRectsContested().size()) {
                         entry.getValue().killed();
-                    } else if (entry.getValue().getRectsContested().size() < gamer.getRectsContested().size()) {
+                    } else if (entry.getValue().getRectsContested().size() > gamer.getRectsContested().size()) {
                         gamer.killed();
                     } else if (entry.getValue().getRectsContested().size() == gamer.getRectsContested().size()) {
-                        if (entry.getValue().getRectsOwned().size() > gamer.getRectsOwned().size()) {
+                        if (entry.getValue().getRectsOwned().size() < gamer.getRectsOwned().size()) {
                             entry.getValue().killed();
-                        } else {
+                        }
+                        else if (entry.getValue().getRectsOwned().size() > gamer.getRectsOwned().size()){
+                            gamer.killed();
+                        }
+                        else {
                             gamer.killed();
                         }
                     }
